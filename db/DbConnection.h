@@ -22,10 +22,10 @@ private:
 	DbConnection();
 public:
 	void setDbConnection(const std::string& schema ,
-				const std::string username , const std::string password);
+				const std::string& username , const std::string& password);
 	static myPay::DbConnection* dbCon;
 	bool isClosed();
-	static bool init_database(const std::string& schema , const std::string username , const std::string password);
+	static bool init_database(const std::string& schema , const std::string& username , const std::string& password);
 	static sql::Connection* getInstance();
 
 	virtual ~DbConnection();

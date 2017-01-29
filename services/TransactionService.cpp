@@ -32,12 +32,12 @@ void TransactionService::get_Transaction_controller(const shared_ptr< Session > 
 		std::string ret;
 		if(request->has_query_parameter("sno"))
 		{
-//			const char* c = reinterpret_cast<const char*>(body.data());
-//			std::string str =std::string(c);
-//			removeJunkChars(str);
-//			nlohmann::json js  = nlohmann::json::parse(str);
-//			std::cout << " Substd::string ---| " << str << "|---" << std::endl;
-//			int sno = js["sno"];
+			//			const char* c = reinterpret_cast<const char*>(body.data());
+			//			std::string str =std::string(c);
+			//			removeJunkChars(str);
+			//			nlohmann::json js  = nlohmann::json::parse(str);
+			//			std::cout << " Substd::string ---| " << str << "|---" << std::endl;
+			//			int sno = js["sno"];
 			int sno = atoi(request->get_query_parameter("sno").c_str());
 			std::cout << "Sno ---| " << sno << "|---" << std::endl;
 			Transaction t;
@@ -53,7 +53,7 @@ void TransactionService::get_Transaction_controller(const shared_ptr< Session > 
 		{
 			std::vector<Transaction> vec = Transaction::getTrasaction();
 			std::cout <<"vector Size:" << vec.size() << std::endl;
- 			if(vec.size() > 0)
+			if(vec.size() > 0)
 			{
 				ret = getJsonForVector(vec);
 			}
@@ -92,7 +92,7 @@ void TransactionService::put_Transaction_controller( const shared_ptr< Session >
 		{
 			ret = failure;
 		}
-		session->close( OK, sucess, { { "Content-Length", ::to_string(sucess.length()) }, { "Connection", "close" } } );
+		session->close( OK, ret, { { "Content-Length", ::to_string(ret.length()) }, { "Connection", "close" } } );
 
 			} );
 }
@@ -122,7 +122,7 @@ void TransactionService::post_Transaction_controller( const shared_ptr< Session 
 		{
 			ret = failure;
 		}
-		session->close( OK, sucess, { { "Content-Length", ::to_string(sucess.length()) }, { "Connection", "close" } } );
+		session->close( OK, ret, { { "Content-Length", ::to_string(ret.length()) }, { "Connection", "close" } } );
 			} );
 }
 
@@ -141,8 +141,15 @@ void TransactionService::delete_Transaction_controller( const shared_ptr< Sessio
 		std::cout << " Substd::string ---| " << str << "|---" << std::endl;
 		int sno = js["sno"];
 		std::cout << "Sno ---| " << sno << "|---" << std::endl;
-		Transaction::deleteTransaction(sno);
-		session->close( OK, sucess, { { "Content-Length", ::to_string(sucess.length()) }, { "Connection", "close" } } );
+		if(Transaction::deleteTransaction(sno))
+		{
+			ret = sucess;
+		}
+		else
+		{
+			ret = failure;
+		}
+		session->close( OK, ret, { { "Content-Length", ::to_string(ret.length()) }, { "Connection", "close" } } );
 			} );
 }
 

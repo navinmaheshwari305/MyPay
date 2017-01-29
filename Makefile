@@ -37,3 +37,7 @@ clean:
 	
 .cpp.o :
 	$(CXX) -c $< -o $@  $(LIBS) $(INCS) $(FLGS)
+	
+	
+cppcheck : 
+	cppcheck --enable=all --inconclusive --xml-version=2 --force . 2> result.xml && cppcheck-htmlreport --title="my project name" --source-dir= . --report-dir=./reports/ --file=result.xml && rm result.xml

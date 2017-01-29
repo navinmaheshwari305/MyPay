@@ -19,14 +19,14 @@ DbConnection::DbConnection()
 {}
 
 void DbConnection::setDbConnection(const std::string& schema ,
-		const std::string username , const std::string password) {
+		const std::string& username , const std::string& password) {
 
 	try{
 		driver = get_driver_instance();
 		connection = driver->connect("tcp://127.0.0.1:3306" , username , password);
 		connection->setSchema(schema);
 	}
-	catch (SQLException e) {
+	catch (SQLException& e) {
 		std::cout << "Exception Caught : [ " << __FUNCTION__ << "]["
 				<< __LINE__ << "][What:" << e.what() << "]"<< std::endl;
 	}
@@ -36,7 +36,7 @@ DbConnection::~DbConnection() {
 	closeCon();
 }
 
-bool DbConnection::init_database(const std::string& schema , const std::string username , const std::string password)
+bool DbConnection::init_database(const std::string& schema , const std::string& username , const std::string& password)
 {
 	dbCon = new DbConnection();
 	dbCon->setDbConnection(schema,username,password);
